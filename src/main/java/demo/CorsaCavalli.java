@@ -5,20 +5,23 @@ import java.util.Scanner;
 
 public class CorsaCavalli {
 
-    Scanner sc = new Scanner(System.in);
+    private Scanner sc;
 
-    ArrayList<MioThread> scuderia = new ArrayList<>();
-    ArrayList<Persona> persone = new ArrayList<>();
+    private ArrayList<Cavallo> scuderia;
+    private ArrayList<Persona> persone;
     
-    MioThread Cavallo1 = new MioThread("Fulmine");
-    MioThread Cavallo2 = new MioThread("Tiberio");
-    MioThread Cavallo3 = new MioThread("Rigolini");
-    MioThread Cavallo4 = new MioThread("Birbissi");
-    MioThread Cavallo5 = new MioThread("Tartufo");
-    MioThread Cavallo6 = new MioThread("Napoleone");
+    private Cavallo Cavallo1 = new Cavallo("Fulmine");
+    private Cavallo Cavallo2 = new Cavallo("Tiberio");
+    private Cavallo Cavallo3 = new Cavallo("Rigolini");
+    private Cavallo Cavallo4 = new Cavallo("Birbissi");
+    private Cavallo Cavallo5 = new Cavallo("Tartufo");
+    private Cavallo Cavallo6 = new Cavallo("Napoleone");
 
     CorsaCavalli(ArrayList<Persona> persone){
 
+        sc = new Scanner(System.in);
+
+        scuderia = new ArrayList<>();
         this.persone = persone;
         
         aggingiCavalli();
@@ -28,6 +31,7 @@ public class CorsaCavalli {
         gara();
         pagaScommesse();
         stampaConti();
+        eliminaGiocatore();
         resetScuderia();
 
     }
@@ -45,7 +49,7 @@ public class CorsaCavalli {
 
     private void generaQuota(){
 
-        for (MioThread cavallo : scuderia) {
+        for (Cavallo cavallo : scuderia) {
             cavallo.generaQuota();
         }
 
@@ -69,7 +73,7 @@ public class CorsaCavalli {
                 System.out.println(p.getNome() + " inserisci il cavallo");
                 int cavallo = sc.nextInt();
                 if(cavallo >= 0 && cavallo < scuderia.size()){
-                    p.setCavallo(cavallo);
+                    p.setScommessa(cavallo);
                     break;
                 }
                 System.out.println("Scelta non valida");
@@ -79,8 +83,8 @@ public class CorsaCavalli {
                 System.out.println(p.getNome() + " inserisci quanto vuoi scommettere, conto : " + p.getConto());
                 double scommessa = sc.nextInt();
                 if(p.getConto() - scommessa >= 0){
-                    p.setScommessa(scommessa);
-                    p.setConto(p.getConto() - p.getScommessa());
+                    p.setSaldoScommesso(scommessa);
+                    p.setConto(p.getConto() - p.getSaldoScommesso());
                     break;
                 }
                 System.out.println("Saldo insufficente");
@@ -98,13 +102,13 @@ public class CorsaCavalli {
     
         System.out.println("Inizio Gara");
     
-        for (MioThread cavallo : scuderia) {
+        for (Cavallo cavallo : scuderia) {
             cavallo.start();
         }
     
         try {
     
-            for (MioThread cavallo : scuderia) {
+            for (Cavallo cavallo : scuderia) {
                 cavallo.join();
             }
     
@@ -121,10 +125,10 @@ public class CorsaCavalli {
         
         for (Persona p : persone) {
 
-            MioThread cavalloScomesso = scuderia.get(p.getCavallo());
+            Cavallo cavalloScomesso = scuderia.get(p.getScommessa());
     
             if(cavalloScomesso.getPosizioneFinale() == 1){
-                p.setConto((p.getScommessa()*cavalloScomesso.getQuota()) + p.getConto());
+                p.setConto((p.getSaldoScommesso()*cavalloScomesso.getQuota()) + p.getConto());
             }
     
         }
@@ -138,6 +142,14 @@ public class CorsaCavalli {
             System.out.println(p.getNome() + " conto : " + p.getConto());
         }
 
+    }
+
+    private void eliminaGiocatore(){
+        for (Persona p : persone) {
+            if(p.getConto() == 0){
+                persone.remove(p);
+            }
+        }
     }
     
     private void resetScuderia(){

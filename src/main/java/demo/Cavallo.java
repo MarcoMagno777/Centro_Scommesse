@@ -1,6 +1,6 @@
 package demo;
 
-public class MioThread extends Thread{
+public class Cavallo extends Thread{
     
     private String nome;
     private static int posizone;
@@ -8,7 +8,7 @@ public class MioThread extends Thread{
     private double quota;
 
 
-    MioThread(String nome){
+    Cavallo(String nome){
         this.nome = nome;
     }
 

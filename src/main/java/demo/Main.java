@@ -3,8 +3,6 @@ package demo;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.sound.sampled.SourceDataLine;
-
 public class Main {
     public static void main(String[] args) {
 
@@ -13,21 +11,12 @@ public class Main {
 
         ArrayList<Persona> persone = new ArrayList<>();
 
-        Persona p1 = new Persona("Bobo", 15);
-        Persona p2 = new Persona("Marco", 15);
-        Persona p3 = new Persona("Pippo", 10);
-        Persona p4 = new Persona("Maio", 20);
-
-        persone.add(p1);
-        //persone.add(p2);
-        //persone.add(p3);
-        persone.add(p4);
-
         do{
 
             System.out.println("___Menu___");
-            System.out.println("1) Corsa cavalli");
-            System.out.println("2) Roulette");
+            System.out.println("1) Inserisci giocatore");
+            System.out.println("2) Corsa cavalli");
+            System.out.println("3) Roulette");
             System.out.println("0) Esci");
 
             scelta = sc.nextInt();
@@ -37,24 +26,30 @@ public class Main {
                     break;
                 case 1: 
 
-                    CorsaCavalli cc = new CorsaCavalli(persone);
-                    
+                    Persona p = new Persona();
+                    System.out.println("Inserisci nome giocatore : ");  
+                    p.setNome(sc.nextLine());
+                    System.out.println("Inserisci il saldo : ");
+                    p.setConto(sc.nextInt());
+                    persone.add(p);
                     break;
 
                 case 2:
 
-                    Roulette r = new Roulette();
-
+                    CorsaCavalli cc = new CorsaCavalli(persone);  
                     break;
+
+                case 3: 
+
+                    Roulette r = new Roulette(persone);
+                    break;
+                    
                 default :
                 System.out.println("Scelta non valida");
             }
 
-        
 
         }while(scelta != 0);
-        
-
 
     }
 }
