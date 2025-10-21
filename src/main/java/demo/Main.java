@@ -28,10 +28,15 @@ public class Main {
 
                     Persona p = new Persona();
                     System.out.println("Inserisci nome giocatore : ");  
+                    sc.nextLine();
                     p.setNome(sc.nextLine());
                     System.out.println("Inserisci il saldo : ");
                     p.setConto(sc.nextInt());
                     persone.add(p);
+                    
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
+                    
                     break;
 
                 case 2:

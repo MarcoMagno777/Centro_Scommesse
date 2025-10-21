@@ -1,6 +1,7 @@
 package demo;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -20,6 +21,7 @@ public class Roulette {
         numeri = new ArrayList<>();
         this.persone = persone;
 
+        clearScreen();
         assegnaNumeri();
         stampaQuote();
         inserimentoScommesse();
@@ -28,6 +30,7 @@ public class Roulette {
         stampaConti();
         eliminaGiocatore();
         resetNumeri();
+        
     }
 
     private void assegnaNumeri() {
@@ -182,12 +185,21 @@ public class Roulette {
         }
     }
 
-    private void eliminaGiocatore(){
+    private void eliminaGiocatore() {
+
+        List<Persona> toRemove = new ArrayList<>();
+
         for (Persona p : persone) {
-            if(p.getConto() == 0){
-                persone.remove(p);
+            if (p.getConto() == 0) {
+                toRemove.add(p);
             }
-        }
+        }   
+        persone.removeAll(toRemove); 
+    }
+
+    public void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     private void resetNumeri() {

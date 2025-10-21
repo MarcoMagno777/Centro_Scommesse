@@ -1,14 +1,14 @@
 package demo;
+
 public class Persona {
 
     private String nome;
     private double conto;
     private double saldoScommesso;
     private int scommessa;
+    private String tipoScommessa; 
 
-    Persona(){
-
-    }
+    Persona(){}
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -26,6 +26,10 @@ public class Persona {
         this.conto = conto;
     }
 
+    public void setTipoScommessa(String tipoScommessa) {
+        this.tipoScommessa = tipoScommessa;
+    }
+
     public int getScommessa() {
         return scommessa;
     }
@@ -41,5 +45,9 @@ public class Persona {
     public String getNome() {
         return nome;
     }
-    
+
+    public String getTipoScommessa() {
+        return tipoScommessa;
+    }
 }
+
