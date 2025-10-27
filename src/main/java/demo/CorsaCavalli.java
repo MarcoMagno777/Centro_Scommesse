@@ -176,9 +176,26 @@ public class CorsaCavalli {
     }
 
     private void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        
+    try {
+
+        String os = System.getProperty("os.name").toLowerCase();
+
+            if (os.contains("windows")) {
+                
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+
+        } catch (Exception e) {
+
+        e.printStackTrace();
+        
+        }
     }
+
 
     private void resetScuderia() {
         scuderia.clear();
